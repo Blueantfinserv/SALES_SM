@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BlueAnt Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+      <img src="web-logo.png" alt="BlueAnt" class="logo">
+    </header>
+
+    <!-- WORK SUMMARY -->
+    <section>
+      <h3 class="section-title">YOUR WORK SUMMARY</h3>
+
+      <div class="cards-row">
+
+        <!-- CARD 1 -->
+        <div class="card blue">
+  <div class="card-heading blue-bg">
+    <h4>Meeting</h4>
+  </div>
+
+  <p class="big" id="meetingToday">0</p>
+  <div class="today">Today</div>
+
+  <div class="stats blue-bg">
+    Week : <span id="meetingWeek">0</span>
+  </div>
+</div>
+
+        <!-- CARD 2 -->
+        <div class="card pink">
+  <div class="card-heading pink-bg">
+    <h4>Intro</h4>
+  </div>
+
+  <p class="big" id="introToday">0</p>
+  <div class="today">Today</div>
+
+  <div class="stats pink-bg">
+    Week : <span id="introWeek">0</span>
+  </div>
+</div>
+
+        <!-- CARD 3 -->
+        <div class="card green">
+          <div class="card-heading green-bg">
+            <h4>Converted</h4>
+          </div>
+
+          <p class="big" id="convertedToday">0</p>
+          <div class="today">Today</div>
+
+          <div class="stats green-bg">
+  Week : <span id="convertedWeek">0</span>
+</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- YOUR SCORE -->
+    <section>
+      <h3 class="section-title">SCORE</h3>
+      <div class="score-box">
+        <span class="score-label">THIS WEEK SCORE = </span>
+        <span id="yourScore">0</span>
+      </div>
+    </section>
+
+    <!-- YOUR DATA -->
+    <section>
+      <h3 class="section-title">YOUR DATA</h3>
+
+      <div class="data-grid">
+        <button class="data-btn green" onclick="openPage('converted')">Converted Client</button>
+        <button class="data-btn yellow" onclick="openPage('leads')">Lead Collected</button>
+        <button class="data-btn red" onclick="openPage('pastmonth')">Past Month Data</button>
+        <button class="data-btn purple" onclick="openPage('documentreceived')">Document Received* </button>
+      </div>
+    </section>
+
+    <!-- FOOTER BUTTON -->
+    <footer>
+      <button class="main-btn" id="myTasksBtn">MY TASKS</button>
+    </footer>
+
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

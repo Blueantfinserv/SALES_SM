@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Blueant Login</title>
+    <link rel="stylesheet" href="login.css" />
+    <link rel="manifest" href="manifest.json" />
+
+    <meta name="theme-color" content="#1677ff" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+  </head>
+
+  <body>
+    <div class="phone-frame">
+      <div class="login-card">
+        <img src="web-logo.png" class="logo" />
+        <h2>Login to Your Work App</h2>
+
+        <div class="input-group">
+          <span class="icon">📞</span>
+          <input type="text" id="mobile" placeholder="Mobile Number" />
+        </div>
+
+        <div class="input-group">
+          <span class="icon">🔒</span>
+          <input type="password" id="password" placeholder="Password" />
+          <span class="show" onclick="togglePassword()">Show</span>
+        </div>
+
+        <button onclick="login()">View Your Work</button>
+
+        <p class="version">App Version 4.0</p>
+      </div>
+    </div>
+
+    <!-- ============= SERVICE WORKER (safe update flow) ============= -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("sw.js").then(reg => {
+            // Check for updates as soon as the page loads
+            reg.update();
+
+            // When a new SW is found, wait until it's ready then activate it
+            reg.addEventListener("updatefound", () => {
+              const newSW = reg.installing;
+              if (!newSW) return;
+              newSW.addEventListener("statechange", () => {
+                if (newSW.state === "installed" && navigator.serviceWorker.controller) {
+                  // New version is installed and waiting — tell it to take over
+                  newSW.postMessage({ type: "SKIP_WAITING" });
+                }
+              });
+            });
+          });
+
+          // Reload ONCE when the new SW takes control
+          let refreshing = false;
+          navigator.serviceWorker.addEventListener("controllerchange", () => {
+            if (refreshing) return;
+            refreshing = true;
+            window.location.reload();
+          });
+        });
+      }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="login.js"></script>
+  </body>
+</html>

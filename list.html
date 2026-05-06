@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Converted Clients</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+min-height:100vh;
+background:linear-gradient(160deg,#b8deff,#ceeaff,#e4f3ff,#f5faff);
+}
+
+.wrap{max-width:520px;margin:auto;padding:32px 18px 60px}
+
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+
+.back{
+width:38px;height:38px;background:#fff;border-radius:11px;
+box-shadow:0 4px 14px rgba(58,123,213,.12);
+display:flex;align-items:center;justify-content:center;cursor:pointer
+}
+
+.back svg{width:18px;height:18px;stroke:#3a7bd5;stroke-width:2.5;fill:none}
+
+.topbar h2{font-size:19px;font-weight:700;color:#1a2340}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-bottom:26px
+}
+
+.stat{
+background:#fff;border-radius:18px;padding:18px 8px 14px;
+text-align:center;box-shadow:0 4px 14px rgba(58,123,213,.10);
+position:relative;cursor:pointer;transition:.2s
+}
+
+.stat.active{transform:scale(1.05)}
+
+.stat::before{
+content:'';
+position:absolute;top:0;left:0;right:0;height:15px;
+border-radius:18px 18px 0 0
+}
+
+.stat:nth-child(1)::before{background:linear-gradient(90deg,#22c97a,#4adeac)}
+.stat:nth-child(2)::before{background:linear-gradient(90deg,#3a7bd5,#7eb3ff)}
+.stat:nth-child(3)::before{background:linear-gradient(90deg,#f4a930,#fcd270)}
+
+.stat b{display:block;font-size:26px;color:#1a2340;margin-bottom:3px}
+
+.stat span{
+font-size:10px;font-weight:600;letter-spacing:.1em;
+text-transform:uppercase;color:#7a8caa
+}
+
+.label{
+font-size:12px;font-weight:700;letter-spacing:.1em;
+text-transform:uppercase;color:#7a8caa;margin-bottom:14px
+}
+
+.empty{text-align:center;padding:60px 0;color:#7a8caa;font-size:14px}
+
+.spin{
+width:36px;height:36px;border:3px solid rgba(34,201,122,.2);
+border-top-color:#22c97a;border-radius:50%;
+animation:spin .7s linear infinite;margin:70px auto
+}
+
+.card2{
+background:#fff;
+border-radius:16px;
+padding:16px 18px;
+margin-bottom:12px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 6px 16px rgba(0,0,0,0.08);
+border-left:6px solid #4adeac;
+}
+
+.card-left{flex:1;padding-right:10px}
+
+.name{
+font-size:15px;
+font-weight:600;
+color:#1a2340;
+line-height:1.4;
+}
+
+.date{
+font-size:12px;
+color:#7a8caa;
+margin-top:4px;
+}
+
+.card-right{display:flex;align-items:center}
+
+.stage{
+background:#e9f2ff;
+color:#2a67d0;
+padding:6px 12px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+white-space:nowrap;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="topbar">
+<div class="back" onclick="history.back()">
+<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+</div>
+<h2 id="pageTitle">Converted Clients</h2>
+</div>
+
+<div id="list"><div class="spin"></div></div>
+
+</div>
+
+<script>
+
+function fetchWithTimeout(url,timeout=10000){
+return Promise.race([
+fetch(url),
+new Promise((_,reject)=>setTimeout(()=>reject(new Error("Timeout")),timeout))
+])
+}
+
+document.addEventListener("DOMContentLoaded",async()=>{
+
+const PER_PAGE=50
+let currentPage=1
+let filteredClients=[]
+
+const p=new URLSearchParams(location.search)
+const email=p.get("email")
+const type=p.get("type")
+const titleEl=document.getElementById("pageTitle")
+
+const titles={
+converted:"Converted Clients",
+leads:"Lead Collected",
+pastmonth:"Past Month Data"
+}
+titleEl.innerText=titles[type]||"Clients"
+
+const el=document.getElementById("list")
+
+if(!email||!type){
+el.innerHTML="<div class='empty'>Invalid Access</div>"
+return
+}
+
+const url=`https://script.google.com/macros/s/AKfycbzmQFF8Wmfsi8kxp_HMZ2Oe0FcFbGfZysZ4oWBvXh8cuZDVqTGmkif971i6-kqL8gpx_w/exec?email=${encodeURIComponent(email)}&type=${encodeURIComponent(type)}`
+
+try{
+
+const cacheKey="clients_"+email+"_"+type
+let cached=localStorage.getItem(cacheKey)
+
+if(cached){
+const parsed=JSON.parse(cached)
+if(Date.now()-parsed.time<300000){
+processData(parsed.data)
+return
+}
+}
+
+const res=await fetchWithTimeout(url,25000)
+const d=await res.json()
+
+localStorage.setItem(cacheKey,JSON.stringify({
+time:Date.now(),
+data:d
+}))
+
+processData(d)
+
+}catch(e){
+el.innerHTML="<div class='empty'>Error loading data</div>"
+}
+
+function processData(d){
+
+el.innerHTML=""
+
+if(!d||!d.length&&!d.clients){
+el.innerHTML="<div class='empty'>No clients found</div>"
+return
+}
+
+const allClients=d.clients?d.clients:d
+if(!allClients.length){
+el.innerHTML="<div class='empty'>No clients found</div>"
+return
+}
+
+const now=new Date()
+
+function getStartOfWeek(date){
+const d=new Date(date)
+const day=d.getDay()
+const diff=d.getDate()-day+(day===0?-6:1)
+return new Date(d.setDate(diff))
+}
+
+const startWeek=getStartOfWeek(now)
+startWeek.setHours(0,0,0,0)
+
+const startMonth=new Date(now.getFullYear(),now.getMonth(),1)
+startMonth.setHours(0,0,0,0)
+
+const start3Month=new Date(now)
+start3Month.setMonth(now.getMonth()-3)
+start3Month.setHours(0,0,0,0)
+
+const startToday=new Date(now)
+startToday.setHours(0,0,0,0)
+
+const todayData=allClients.filter(c=>new Date(c.timestamp)>=startToday)
+const weekData=allClients.filter(c=>new Date(c.timestamp)>=startWeek)
+const monthData=allClients.filter(c=>new Date(c.timestamp)>=startMonth)
+const threeMonthData=allClients.filter(c=>new Date(c.timestamp)>=start3Month)
+
+let statsHTML=""
+
+if(type==="converted"){
+statsHTML=`
+<div class="stats">
+<div class="stat active" data-filter="week"><b>${weekData.length}</b><span>Last Week</span></div>
+<div class="stat" data-filter="month"><b>${monthData.length}</b><span>Last Month</span></div>
+<div class="stat" data-filter="3month"><b>${threeMonthData.length}</b><span>Last 3 Months</span></div>
+</div>`
+}
+
+if(type==="leads"){
+statsHTML=`
+<div class="stats">
+<div class="stat active" data-filter="today"><b>${todayData.length}</b><span>Today</span></div>
+<div class="stat" data-filter="week"><b>${weekData.length}</b><span>This Week</span></div>
+<div class="stat" data-filter="month"><b>${monthData.length}</b><span>This Month</span></div>
+</div>`
+}
+
+el.innerHTML=`
+${statsHTML}
+<div class="label">Client List · <span id="count"></span></div>
+<div id="clientContainer"></div>
+<div id="pagination" style="margin-top:20px;text-align:center;"></div>
+`
+
+const clientContainer=document.getElementById("clientContainer")
+const countEl=document.getElementById("count")
+const stats=document.querySelectorAll(".stat")
+const pagination=document.getElementById("pagination")
+
+function formatDate(dateStr){
+const dt=new Date(dateStr)
+return dt.toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})
+}
+
+function renderPage(page){
+
+currentPage=page
+const start=(page-1)*PER_PAGE
+const end=start+PER_PAGE
+const pageData=filteredClients.slice(start,end)
+
+let html=""
+
+pageData.forEach(c=>{
+html+=`
+<div class="card2">
+<div class="card-left">
+<div class="name">${c.name}</div>
+<div class="date">${formatDate(c.timestamp)}</div>
+</div>
+<div class="card-right">
+${c.stage?`<div class="stage">${c.stage}</div>`:""}
+</div>
+</div>`
+})
+
+clientContainer.innerHTML=html
+renderPagination()
+}
+
+function renderPagination(){
+
+pagination.innerHTML=""
+const totalPages=Math.ceil(filteredClients.length/PER_PAGE)
+if(totalPages<=1)return
+
+for(let i=1;i<=totalPages;i++){
+const btn=document.createElement("button")
+btn.innerText=i
+btn.style.margin="0 4px"
+btn.style.padding="5px 10px"
+btn.style.borderRadius="6px"
+btn.style.border="none"
+btn.style.cursor="pointer"
+btn.style.background=(i===currentPage)?"#1a2340":"#3a7bd5"
+btn.style.color="#fff"
+btn.onclick=()=>renderPage(i)
+pagination.appendChild(btn)
+}
+
+}
+
+function applyFilter(filter){
+
+if(filter==="today")filteredClients=todayData
+if(filter==="week")filteredClients=weekData
+if(filter==="month")filteredClients=monthData
+if(filter==="3month")filteredClients=threeMonthData
+
+countEl.innerText=filteredClients.length
+renderPage(1)
+}
+
+stats.forEach(stat=>{
+stat.addEventListener("click",()=>{
+stats.forEach(s=>s.classList.remove("active"))
+stat.classList.add("active")
+applyFilter(stat.dataset.filter)
+})
+})
+
+if(type==="converted") applyFilter("week")
+else if(type==="leads") applyFilter("today")
+else{
+filteredClients=allClients
+countEl.innerText=filteredClients.length
+renderPage(1)
+}
+
+}
+
+})
+
+</script>
+
+</body>
+</html>

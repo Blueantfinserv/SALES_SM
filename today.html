@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Tasks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="today.css">
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader-overlay" id="loader">
+  <div class="spinner"></div>
+</div>
+
+<!-- BACKGROUND LAYER (NEVER SCROLLS) -->
+<div class="bg-layer"></div>
+
+<!-- FIXED TOP SECTION (NEVER SCROLLS) -->
+<div class="fixed-top">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="title-section">
+      <h2 class="page-title">My Tasks</h2>
+      <p id="date" class="page-date"></p>
+    </div>
+    <img src="web-logo.png" class="logo" alt="Logo">
+  </div>
+
+  <!-- SEARCH + NEW LEAD -->
+  <div class="search-wrap">
+    <input
+      type="text"
+      id="search"
+      placeholder="Search..."
+    >
+    <a 
+      href="https://docs.google.com/forms/d/e/1FAIpQLScNUGcSklDIByj27kBKewxMUWMCKVzf5B_IcnwOwxqqhqVvqA/viewform"
+      class="assigned-lead-btn"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Lead
+    </a>
+    <a 
+      href="https://docs.google.com/forms/d/e/1FAIpQLSdkgZxRO-QlZaaS7D8v0I7EsEKaQDSzbHwxhVFkWKMvIhOGGw/viewform"
+      class="new-lead-btn"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      NEW LEAD
+    </a>
+  </div>
+
+  <!-- FILTER STRIP -->
+  <div class="filter-strip">
+
+    <!-- FILTER 1 -->
+    <select id="dateFilter" class="filter-box">
+      <option value="all">All Work</option>
+      <option value="today">Today</option>
+      <option value="pending">Pending</option>
+    </select>
+
+    <!-- FILTER 2 -->
+    <select id="stageFilter" class="filter-box">
+      <option value="">All Stages</option>
+      <option value="Intro Meeting">Intro Meeting</option>
+      <option value="1st Meeting">1st Meeting</option>
+      <option value="2nd Meeting">2nd Meeting</option>
+      <option value="3rd Meeting">3rd Meeting</option>
+      <option value="4th Meeting">4th Meeting</option>
+      <option value="5th Meeting">5th Meeting</option>
+      <option value="6th Meeting">6th Meeting</option>
+      <option value="7th Meeting">7th Meeting</option>
+      <option value="8th Meeting">8th Meeting</option>
+      <option value="9th Meeting">9th Meeting</option>
+      <option value="10th Meeting">10th Meeting</option>
+    </select>
+
+    <!-- SERVICE REQUEST -->
+    <a 
+      href="https://docs.google.com/forms/d/14H3qkLVigG18GVMhcIqGb0PrR2hk3C5L9EHHDKxbqD0/viewform?edit_requested=true"
+      class="ser-req-btn"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Service Request
+    </a>
+
+  </div>
+
+  <!-- USER TABS -->
+  <div id="userTabsStrip" class="user-tabs-strip" style="display:none;"></div>
+
+</div>
+
+<!-- SCROLLABLE AREA -->
+<div class="list-wrapper" id="listWrapper">
+  <div class="pull-indicator" id="pullText"></div>
+  <div id="list"></div>
+</div>
+
+<script src="today.js"></script>
+
+</body>
+</html>

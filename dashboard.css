@@ -1,0 +1,189 @@
+/* ================== GLOBAL ================== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-image: url("dbg.png");
+  font-family: "Segoe UI", sans-serif;
+}
+
+.app {
+  max-width: 420px;
+  margin: auto;
+  padding: 15px;
+  min-height: 100vh;
+}
+
+/* ================== HEADER ================== */
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 200px;
+}
+
+/* ================== TITLES ================== */
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 20px 0;
+}
+
+/* ================== CARDS ROW ================== */
+.cards-row {
+  display: flex;
+  gap: 10px;
+}
+
+/* ================== CARD ================== */
+.card {
+  flex: 1;
+  background: #fff;
+  border-radius: 14px;
+  text-align: center;
+  border: 2px solid;
+  overflow: hidden;
+}
+
+.card h4 {
+  font-size: 20px;
+  margin: 5px 0;
+}
+
+.big {
+  font-size: 40px;
+  font-weight: bold;
+  margin: 8px 0 4px;
+}
+
+.today {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.card-heading {
+  padding: 6px;
+  border-bottom: 2px solid;
+}
+
+.stats {
+  margin: 6px;
+  padding: 6px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 2px solid;
+}
+
+.blue {
+  border-color: #7da2ff;
+}
+.blue-bg {
+  background-color: #b5c7fa;
+  border-color: #7da2ff;
+}
+
+.pink {
+  border-color: #ff9fa3;
+}
+.pink-bg {
+  background-color: #fabba6;
+  border-color: #ff9fa3;
+}
+
+.green {
+  border-color: #7be0a1;
+}
+.green-bg {
+  background-color: #b2f9cd;
+  border-color: #7be0a1;
+}
+
+.score-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  background: #fff;
+  border-radius: 14px;
+  border: 2px solid #6a6aff;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+
+.score-label {
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #888;
+  line-height: 1;
+}
+
+.score-divider {
+  width: 1px;
+  height: 28px;
+  background: #ddd;
+  flex-shrink: 0;
+}
+
+#yourScore {
+  font-size: 40px;
+  font-weight: 700;
+  color: #3b4cff;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.data-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.data-btn {
+  padding: 15px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.data-btn.green {
+  background: #c9f5d9;
+  border: 1px solid #7be0a1;
+}
+.data-btn.blue {
+  background: #cfdcff;
+  border: 1px solid #6a6aff;
+}
+.data-btn.yellow {
+  background: #fff5b8;
+  border: 1px solid #ffdd57;
+}
+.data-btn.red {
+  background: #ffcccc;
+  border: 1px solid #ff6b6b;
+}
+
+/* ================== FOOTER ================== */
+footer {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.main-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(to right, #6a6aff, #3b4cff);
+  color: white;
+}

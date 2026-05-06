@@ -1,0 +1,454 @@
+/* =============== GLOBAL RESET & BASE ============================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --app-width: 420px;
+  --top-offset: 180px; /* default height of fixed-top */
+  --top-offset-tabs: 234px; /* with tabs */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+/* =============== FIXED BACKGROUND =========================== */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  background: url("bg.png") no-repeat center center / cover;
+  z-index: -1;
+}
+
+/* ============== BODY ============================= */
+body {
+  padding: 12px;
+  background: transparent;
+  min-height: 100dvh;
+}
+
+/* ================= MOBILE APP CONTAINER (COMMON RULE) ================= */
+.fixed-top,
+.list-wrapper {
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--app-width);
+}
+
+/* =================== FIXED TOP AREA ============================ */
+.fixed-top {
+  position: fixed;
+  top: 0;
+  padding: 12px;
+  z-index: 10;
+}
+
+/* ===================== HEADER ======================= */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.title-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #000;
+  line-height: 1.1;
+}
+
+.page-date {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #555;
+}
+
+.logo {
+  height: 56px;
+  object-fit: contain;
+  position: relative;
+  top: -6px;
+}
+
+/* ================== SEARCH & ACTION =========================== */
+.search-wrap {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+#search {
+  flex: 1;
+  min-width: 0; /* allow input to shrink inside flex */
+  padding: 9px 14px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+}
+
+#search:focus {
+  border-color: #1677ff;
+}
+
+/* Both red action buttons share the same styling */
+.new-lead-btn,
+.assigned-lead-btn {
+  padding: 9px 12px;
+  border-radius: 20px;
+  background-color: #ed3237;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  text-align: center;
+  flex-shrink: 0;
+  letter-spacing: 0.2px;
+}
+
+.assigned-lead-btn {
+  min-width: 60px;
+}
+
+.new-lead-btn {
+  min-width: 90px;
+}
+
+.new-lead-btn:hover,
+.assigned-lead-btn:hover {
+  background-color: #d12a2f;
+}
+
+/* ======================== FILTER STRIP ========================== */
+.filter-strip {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.filter-box {
+  flex: 1;
+  min-width: 0; /* prevent overflow */
+  padding: 8px 10px;
+  border-radius: 20px;
+  background-color: #c6d6ef;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 26px;
+}
+
+/* ====================== SCROLLABLE LIST ========================== */
+.list-wrapper {
+  position: fixed;
+  top: var(--top-offset);
+  bottom: 0;
+  padding: 10px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ======================== PULL INDICATOR ============================= */
+.pull-indicator {
+  text-align: center;
+  font-size: 12px;
+  color: #555;
+  padding: 6px 0;
+}
+
+/* ======================== LEAD CARD ============================= */
+.lead-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* ==================== CARD TOP ============================= */
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-top .left {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+}
+
+.mobile {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-top: 6px;
+  font-size: 15px;
+  color: #000;
+}
+
+.mobile a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ======================= UPDATE BUTTON ============================ */
+.update-btn {
+  background: #1677ff;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* ======================== DIVIDER ============================= */
+.divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 12px 0;
+}
+
+/* ========================= BOTTOM ROW ========================== */
+.card-bottom {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.time {
+  font-size: 14px;
+  color: #000;
+  white-space: nowrap;
+}
+
+/* ====================== LOCATION TEXT ============================ */
+.location {
+  font-size: 14px;
+  color: #000;
+  flex: 1;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.location.expanded {
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+}
+
+/* ========================= STAGE BADGES ============================ */
+.stage,
+.stage-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.stage-badge.follow-up-done { background: #e8f5e9; color: #2e7d32; }
+.stage-badge.appointment-fixed { background: #e3f2fd; color: #1565c0; }
+.stage-badge.intro-meetings { background: #fff3e0; color: #ef6c00; }
+.stage-badge.pending { background: #f5f5f5; color: #666; }
+
+/* ========================= WHATSAPP ICON ============================= */
+.whatsapp-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+/* ======================= LOAD MORE ============================= */
+#loadMoreBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 12px auto;
+  display: block;
+  color: #000;
+  text-decoration: underline;
+  font-size: large;
+  cursor: pointer;
+}
+
+/* ======================= LOADER ============================= */
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.6);
+  z-index: 20;
+}
+
+.spinner {
+  width: 42px;
+  height: 42px;
+  border: 4px solid #ccc;
+  border-top-color: #1e88e5;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ========================= USER TABS ========================= */
+.user-tabs-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 8px 0 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.user-tabs-strip::-webkit-scrollbar { display: none; }
+
+.user-tab {
+  flex-shrink: 0;
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 2px solid #1677ff;
+  background: #fff;
+  color: #1677ff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  white-space: nowrap;
+}
+
+.user-tab:hover { background: #e8f0ff; }
+
+.user-tab.active {
+  background: #1677ff;
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(22,119,255,.35);
+}
+
+.tab-placeholder {
+  font-size: 13px;
+  color: #999;
+  padding: 8px 4px;
+}
+
+/* ========================= EMPTY PROMPT ========================= */
+.ah-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+}
+
+.ah-prompt-icon {
+  font-size: 48px;
+  animation: bounce 1.4s infinite;
+}
+
+.ah-prompt-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #555;
+  text-align: center;
+  line-height: 1.5;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ========================= TABS OFFSET ========================= */
+.list-wrapper.tabs-visible {
+  top: var(--top-offset-tabs);
+}
+
+/* ================= SERVICE REQUEST BUTTON ================= */
+.ser-req-btn {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border-radius: 20px;
+  background-color: #00afef;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.2px;
+}
+
+.ser-req-btn:hover {
+  background-color: #009ad4;
+}
+
+/* ========================= EXTRA SMALL SCREENS ========================= */
+@media (max-width: 360px) {
+  .page-title { font-size: 21px; }
+  .page-date { font-size: 13px; }
+  .logo { height: 48px; }
+
+  .new-lead-btn,
+  .assigned-lead-btn,
+  .ser-req-btn {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .new-lead-btn { min-width: 78px; }
+  .assigned-lead-btn { min-width: 52px; }
+
+  .filter-box {
+    font-size: 12px;
+    padding: 7px 8px;
+    padding-right: 22px;
+  }
+}

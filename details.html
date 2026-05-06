@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Lead Details</title>
+  <link rel="stylesheet" href="details.css">
+</head>
+<body>
+<!-- HEADER -->
+<div class="header">
+  <button class="back-btn" onclick="goBack()" aria-label="Back">
+  <svg viewBox="0 0 24 24" class="back-icon">
+    <path d="M15 18l-6-6 6-6" />
+  </svg>
+</button>
+  <h1 id="leadName">Lead</h1>
+  <img src="web-logo.png" class="logo">
+</div>
+<!-- ACTION BUTTONS -->
+<div class="actions">
+  <a id="callBtn" class="action-btn">Call</a>
+  <a id="waBtn" class="action-btn">WhatsApp</a>
+</div>
+<!-- LEAD STATUS -->
+<div class="card">
+  <h3>Lead Details</h3>
+  <div class="divider"></div>
+  <div class="row"><span>Timestamp</span><span id="timestamp"></span></div>
+  <div class="row"><span>Company</span><span id="company"></span></div>
+  <div class="row"><span>Location</span><span id="Location"></span></div>
+</div>
+<!-- MEETING & STATUS -->
+<div class="card">
+  <h3>Meeting & Status</h3>
+  <div class="divider"></div>
+  <div class="row"><span>Next Plan Date</span><span id="nextPlan"></span></div>
+  <div class="row"><span>Updated Stage</span><span id="stage"></span></div>
+</div>
+<!-- REMARKS -->
+<div class="card">
+  <h3>Remarks</h3>
+  <div class="divider"></div>
+  <p id="remarks">-</p>
+</div>
+<!-- UPDATE -->
+<a id="updateBtn" class="update-main">Update Lead</a>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="details.js" defer></script>
+</body>
+</html>

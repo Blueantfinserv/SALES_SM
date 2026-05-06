@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Site Visit Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Leaflet CSS for the map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <link rel="stylesheet" href="form.css">
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg-layer"></div>
+
+<!-- LOADER -->
+<div class="loader-overlay" id="loader">
+  <div class="spinner"></div>
+  <p id="loaderText">Submitting…</p>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FORM CONTAINER -->
+<div class="form-wrap">
+
+  <!-- HEADER -->
+  <div class="form-header">
+    <div>
+      <h2 class="form-title">Site Visit Form</h2>
+      <p class="form-subtitle" id="todayDate"></p>
+    </div>
+  </div>
+
+  <form id="visitForm" autocomplete="off">
+
+    <!-- ============= SECTION 1: BASIC INFO ============= -->
+    <section class="form-section">
+      <h3 class="section-title">Basic Info</h3>
+
+      <label class="field">
+        <span class="label-text">Client Name <em>*</em></span>
+        <input type="text" name="clientName" required>
+      </label>
+
+      <label class="field">
+        <span class="label-text">Mobile Number <em>*</em></span>
+        <input type="tel" name="mobile" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" required>
+      </label>
+
+      <label class="field">
+        <span class="label-text">Email</span>
+        <input type="email" name="email">
+      </label>
+
+      <label class="field">
+        <span class="label-text">Visit Type <em>*</em></span>
+        <select name="visitType" required>
+          <option value="">-- Select --</option>
+          <option>Intro Meeting</option>
+          <option>Follow-up</option>
+          <option>Service Request</option>
+          <option>Other</option>
+        </select>
+      </label>
+    </section>
+
+    <!-- ============= SECTION 2: VISIT DETAILS ============= -->
+    <section class="form-section">
+      <h3 class="section-title">Visit Details</h3>
+
+      <label class="field">
+        <span class="label-text">Stage <em>*</em></span>
+        <select name="stage" required>
+          <option value="">-- Select --</option>
+          <option>Intro Meeting</option>
+          <option>1st Meeting</option>
+          <option>2nd Meeting</option>
+          <option>3rd Meeting</option>
+          <option>Closed - Won</option>
+          <option>Closed - Lost</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span class="label-text">Discussion Summary <em>*</em></span>
+        <textarea name="summary" rows="4" required placeholder="Briefly describe the conversation..."></textarea>
+      </label>
+
+      <label class="field">
+        <span class="label-text">Next Action</span>
+        <input type="text" name="nextAction" placeholder="e.g., Send proposal by Friday">
+      </label>
+
+      <label class="field">
+        <span class="label-text">Next Meeting Date</span>
+        <input type="date" name="nextDate">
+      </label>
+
+      <label class="field">
+        <span class="label-text">Outcome <em>*</em></span>
+        <select name="outcome" required>
+          <option value="">-- Select --</option>
+          <option>Positive</option>
+          <option>Neutral</option>
+          <option>Needs Follow-up</option>
+          <option>Not Interested</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span class="label-text">Notes</span>
+        <textarea name="notes" rows="3" placeholder="Anything else worth recording..."></textarea>
+      </label>
+    </section>
+
+    <!-- ============= SECTION 3: PHOTOS ============= -->
+    <section class="form-section">
+      <h3 class="section-title">Photos <small>(up to 3)</small></h3>
+
+      <div class="photo-grid">
+        <label class="photo-slot" data-slot="1">
+          <input type="file" accept="image/*" capture="environment" data-photo="1" hidden>
+          <div class="photo-placeholder">
+            <span class="photo-icon">📷</span>
+            <span class="photo-label">Photo 1</span>
+          </div>
+        </label>
+
+        <label class="photo-slot" data-slot="2">
+          <input type="file" accept="image/*" capture="environment" data-photo="2" hidden>
+          <div class="photo-placeholder">
+            <span class="photo-icon">📷</span>
+            <span class="photo-label">Photo 2</span>
+          </div>
+        </label>
+
+        <label class="photo-slot" data-slot="3">
+          <input type="file" accept="image/*" capture="environment" data-photo="3" hidden>
+          <div class="photo-placeholder">
+            <span class="photo-icon">📷</span>
+            <span class="photo-label">Photo 3</span>
+          </div>
+        </label>
+      </div>
+      <p class="hint">Tap a slot to take a photo. Tap an existing photo to replace or remove.</p>
+    </section>
+
+    <!-- ============= SECTION 4: LOCATION ============= -->
+    <section class="form-section">
+      <h3 class="section-title">Location <em>*</em></h3>
+      <p class="hint">Drag the pin to fine-tune the exact spot.</p>
+
+      <div id="map"></div>
+
+      <div class="coords-row">
+        <div class="coord-box">
+          <span class="coord-label">Latitude</span>
+          <span class="coord-value" id="latVal">—</span>
+        </div>
+        <div class="coord-box">
+          <span class="coord-label">Longitude</span>
+          <span class="coord-value" id="lngVal">—</span>
+        </div>
+        <button type="button" class="recenter-btn" id="recenterBtn" title="Recenter to my location">⊙</button>
+      </div>
+
+      <input type="hidden" name="lat" id="latInput">
+      <input type="hidden" name="lng" id="lngInput">
+      <input type="hidden" name="accuracy" id="accuracyInput">
+    </section>
+
+    <!-- ============= SUBMIT ============= -->
+    <button type="submit" class="submit-btn" id="submitBtn">Submit Visit</button>
+
+  </form>
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="form.js"></script>
+</body>
+</html>
