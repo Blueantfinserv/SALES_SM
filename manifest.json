@@ -1,8 +1,8 @@
 {
   "name": "Blueant Workbook",
   "short_name": "Blueant",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "/SALES_SM/",
+  "scope": "/SALES_SM/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1677ff",
