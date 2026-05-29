@@ -44,7 +44,10 @@ const USER_NAMES = {
   "rajg8606@gmail.com": "Rajat",
   "harshpilania4211@gmail.com": "Harsh",
   "aryan10kumar11@gmail.com": "Aryan",
-  "amitsingh2001rkt@gmail.com":"Ammit"
+  "amitsingh2001rkt@gmail.com":"Amit",
+  "raghavraj2510@gmail.com":"Raghav",
+  "mohanmathur259@gmail.com":"Sunny",
+  "garvkumarbsr@gmail.com":"Garv"
 };
 
 // 📱 Mobile → Email mapping
@@ -62,7 +65,10 @@ const MOBILE_TO_EMAIL = {
   "9958335425": "rajg8606@gmail.com",
   "8076786226": "harshpilania4211@gmail.com",
   "9304264007": "aryan10kumar11@gmail.com",
-  "9696926247": "amitsingh2001rkt@gmail.com"
+  "9696926247": "amitsingh2001rkt@gmail.com",
+  "7351045582": "raghavraj2510@gmail.com",
+  "9990895928": "mohanmathur259@gmail.com",
+  "8279340681": "garvkumarbsr@gmail.com"
 };
 
 // 👁 Toggle password
