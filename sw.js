@@ -1,13 +1,4 @@
-/* =====================================================
-   BLUEANT SERVICE WORKER — v11.00
-   - Network-first with timeout for HTML/CSS/JS
-     (falls back to cache if network is slow/down)
-   - Cache-first for images and other static assets
-   - Bypasses Supabase, Apps Script, and all cross-origin requests
-   - Safe update flow: waits for page to ask before taking over
-   ===================================================== */
-
-const CACHE_VERSION = "v11.00";
+const CACHE_VERSION = "v11.3";
 const CACHE_NAME = `blueant-cache-${CACHE_VERSION}`;
 
 const STATIC_ASSETS = [
