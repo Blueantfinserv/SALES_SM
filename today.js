@@ -37,10 +37,6 @@ const USER_NAMES = (() => {
     return {};
   }
 })();
-
-/********************** SUPABASE CONFIG **********************/
-// NOTE: The anon key is public by design, but Row Level Security (RLS) MUST be
-// enabled on the `filtered_leads` table in Supabase to prevent unauthorized access.
 const SUPABASE_URL = "https://qwzyxsbjfedkvuvdmzhk.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF3enl4c2JqZmVka3Z1dmRtemhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NzYxNjYsImV4cCI6MjA5MDI1MjE2Nn0.SSH4G7szFkhNkXZmHZsYQeyjvnoHh2bza8IK5lweEm4";
 
@@ -49,9 +45,6 @@ const SUPABASE_HEADERS = {
   Authorization: `Bearer ${SUPABASE_ANON_KEY}`
 };
 
-/********************** COLUMN MAPPING **********************/
-// Centralized mapping of opaque Supabase column names to semantic field names.
-// If DB columns change, update only this object.
 const COLUMNS = {
   id: "col1",
   name: "col3",
@@ -61,7 +54,8 @@ const COLUMNS = {
   nextPlanDate: "col18",
   updateLink: "col21",
   updatedStage: "col22",
-  leadStatus: "col24"
+  leadStatus: "col24",
+  lastCallDate: "col28"
 };
 
 /********************** CONSTANTS **********************/
@@ -155,6 +149,16 @@ function parseISODate(dateStr) {
   return d;
 }
 
+function formatDisplayDate(dateStr) {
+  const d = parseISODate(dateStr);
+  if (!d) return "-";
+  return d.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  });
+}
+
 function getToday() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -173,6 +177,7 @@ function mapRow(row) {
     leadStatus: row[COLUMNS.leadStatus],
     updateLink: row[COLUMNS.updateLink],
     nextPlanDate: row[COLUMNS.nextPlanDate],
+    lastCallDate: row[COLUMNS.lastCallDate],
     _nextPlanDate: parseISODate(row[COLUMNS.nextPlanDate])
   };
 }
@@ -375,6 +380,7 @@ function buildLeadCard(lead) {
   const safeName = escapeHtml(lead.name || "-");
   const safeLocation = escapeHtml(lead.location || "-");
   const safeStage = escapeHtml(lead.updatedStage || "-");
+  const safeLastCallDate = escapeHtml(formatDisplayDate(lead.lastCallDate));
   const safePhone = sanitizePhone(lead.mobile);
   const safeUpdateLink = safeUrl(lead.updateLink);
 
@@ -404,7 +410,10 @@ function buildLeadCard(lead) {
 
     <div class="card-bottom">
       <div class="location">📍${safeLocation}</div>
-      <div class="stage-badge">${safeStage}</div>
+      <div class="stage-wrap">
+        <div class="stage-badge">${safeStage}</div>
+        <div class="last-call-date">${safeLastCallDate}</div>
+      </div>
     </div>
   `;
 
